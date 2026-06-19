@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>六爻 · 铜钱占卜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 背景层 -->
+  <div class="stars"></div>
+  <div class="nebula"></div>
+  <div class="bagua-ring" aria-hidden="true">
+    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <g id="baguaGroup"></g>
+    </svg>
+  </div>
+
+  <main class="shell">
+    <header class="hero">
+      <svg class="taiji" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="49" fill="#1a1140" stroke="#e8c87a" stroke-width="1.4"/>
+        <path d="M50,1 a49,49 0 0,1 0,98 a24.5,24.5 0 0,1 0,-49 a24.5,24.5 0 0,0 0,-49 z" fill="#f7e2a8"/>
+        <circle cx="50" cy="25.5" r="8" fill="#f7e2a8"/>
+        <circle cx="50" cy="74.5" r="8" fill="#1a1140"/>
+      </svg>
+      <h1>六 爻 神 卦</h1>
+      <p class="subtitle">铜钱摇卦 · 以诚感通 · 一念之间</p>
+    </header>
+
+    <!-- 第一步：提问 -->
+    <section class="panel" id="askPanel">
+      <label class="field-label" for="question">心诚则灵，请默念并写下你所求问之事</label>
+      <textarea id="question" rows="3" placeholder="例如：我近期的事业发展会如何？我与某人的关系将走向何方？"></textarea>
+      <p class="hint">起卦之前，请凝神静气，专注于这一个问题。</p>
+      <button class="btn-primary" id="startBtn">
+        <span>净 手 · 起 卦</span>
+      </button>
+    </section>
+
+    <!-- 第二步：摇卦 -->
+    <section class="panel hidden" id="castPanel">
+      <div class="cast-status" id="castStatus">第 一 爻 · 请掷铜钱</div>
+
+      <div class="coins" id="coins">
+        <div class="coin" data-i="0"><div class="coin-3d">
+          <div class="face front"><div class="coin-art"><span class="hole"></span><i class="ch t">六</i><i class="ch b">爻</i><i class="ch l">神</i><i class="ch r">卦</i></div></div>
+          <div class="face back"><div class="coin-art back-art"><span class="hole"></span></div></div>
+        </div></div>
+        <div class="coin" data-i="1"><div class="coin-3d">
+          <div class="face front"><div class="coin-art"><span class="hole"></span><i class="ch t">六</i><i class="ch b">爻</i><i class="ch l">神</i><i class="ch r">卦</i></div></div>
+          <div class="face back"><div class="coin-art back-art"><span class="hole"></span></div></div>
+        </div></div>
+        <div class="coin" data-i="2"><div class="coin-3d">
+          <div class="face front"><div class="coin-art"><span class="hole"></span><i class="ch t">六</i><i class="ch b">爻</i><i class="ch l">神</i><i class="ch r">卦</i></div></div>
+          <div class="face back"><div class="coin-art back-art"><span class="hole"></span></div></div>
+        </div></div>
+      </div>
+
+      <button class="btn-primary" id="tossBtn"><span>掷 · 第 一 爻</span></button>
+
+      <!-- 卦象逐爻生成（自下而上） -->
+      <div class="hexagram-build" id="hexBuild">
+        <div class="yao-row placeholder" data-pos="5"></div>
+        <div class="yao-row placeholder" data-pos="4"></div>
+        <div class="yao-row placeholder" data-pos="3"></div>
+        <div class="yao-row placeholder" data-pos="2"></div>
+        <div class="yao-row placeholder" data-pos="1"></div>
+        <div class="yao-row placeholder" data-pos="0"></div>
+      </div>
+
+      <button class="btn-ghost small" id="soundToggle" title="音效">🔔 音效：开</button>
+    </section>
+
+    <!-- 第三步：结果 -->
+    <section class="panel hidden" id="resultPanel">
+      <div class="result-head">
+        <h2 id="hexTitle">卦 象</h2>
+        <p id="hexSub" class="hex-sub"></p>
+      </div>
+
+      <div class="result-grid">
+        <div class="hex-card">
+          <div class="hex-card-label">本卦</div>
+          <div class="hex-glyph" id="primaryGlyph"></div>
+          <div class="hex-name" id="primaryName"></div>
+          <div class="hex-trigram" id="primaryTri"></div>
+        </div>
+        <div class="hex-card change-arrow" id="changeArrow">
+          <div class="arrow">⇒</div>
+          <div class="arrow-label">动而变</div>
+        </div>
+        <div class="hex-card" id="changedCard">
+          <div class="hex-card-label">变卦</div>
+          <div class="hex-glyph" id="changedGlyph"></div>
+          <div class="hex-name" id="changedName"></div>
+          <div class="hex-trigram" id="changedTri"></div>
+        </div>
+      </div>
+
+      <div class="detail" id="detail"></div>
+
+      <div class="copy-zone">
+        <button class="btn-primary" id="copyBtn"><span>📋 一键复制卦象，交给 AI 解读</span></button>
+        <p class="hint" id="copyHint">复制后，粘贴给 ChatGPT / Claude / 文心一言等任意 AI 即可获得详尽解读。</p>
+        <button class="btn-ghost" id="againBtn">再 占 一 卦</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>卦由心生 · 结果仅供启发与自省，命运终在己手</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

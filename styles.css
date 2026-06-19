@@ -1,0 +1,236 @@
+:root{
+  --bg:#070512;
+  --bg2:#0d0822;
+  --gold:#e8c87a;
+  --gold-bright:#f7e2a8;
+  --gold-deep:#b8923f;
+  --ink:#ece8ff;
+  --muted:#9b94c4;
+  --violet:#7b5cff;
+  --glow:rgba(232,200,122,.55);
+  --panel:rgba(22,16,46,.72);
+  --line:rgba(232,200,122,.22);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Noto Serif SC",serif;
+  background:radial-gradient(140% 120% at 50% -10%,#1a1140 0%,var(--bg2) 38%,var(--bg) 100%);
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- 背景 ---------- */
+.stars{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 70% 65%,#cdbfff,transparent),
+    radial-gradient(1px 1px at 40% 80%,#fff,transparent),
+    radial-gradient(1px 1px at 85% 20%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 55% 12%,#ffe9b8,transparent),
+    radial-gradient(1px 1px at 12% 70%,#fff,transparent),
+    radial-gradient(1px 1px at 90% 88%,#cdbfff,transparent);
+  background-repeat:repeat;
+  background-size:600px 600px,500px 500px,400px 400px,700px 700px,650px 650px,550px 550px,480px 480px;
+  animation:twinkle 7s ease-in-out infinite alternate;
+}
+@keyframes twinkle{from{opacity:.5}to{opacity:.95}}
+
+.nebula{
+  position:fixed;inset:-20%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(40% 40% at 25% 30%,rgba(123,92,255,.20),transparent 70%),
+    radial-gradient(45% 45% at 80% 70%,rgba(232,200,122,.12),transparent 70%),
+    radial-gradient(35% 35% at 60% 15%,rgba(255,90,170,.10),transparent 70%);
+  filter:blur(8px);
+  animation:drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift{from{transform:translate(-2%,-1%) scale(1)}to{transform:translate(2%,2%) scale(1.06)}}
+
+.bagua-ring{
+  position:fixed;top:50%;left:50%;width:min(86vw,820px);height:min(86vw,820px);
+  transform:translate(-50%,-50%);z-index:0;pointer-events:none;opacity:.10;
+  animation:spin 90s linear infinite;
+}
+.bagua-ring svg{width:100%;height:100%}
+.bagua-ring text{fill:var(--gold);font-size:46px;font-family:"Noto Serif SC",serif}
+.bagua-ring circle{fill:none;stroke:var(--gold);stroke-width:1}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* ---------- 布局 ---------- */
+.shell{
+  position:relative;z-index:2;
+  width:min(92vw,720px);
+  margin:0 auto;
+  padding:48px 0 24px;
+  flex:1;
+}
+
+.hero{text-align:center;margin-bottom:34px}
+.taiji{
+  width:84px;height:84px;margin:0 auto 18px;display:block;
+  animation:rotate 16s linear infinite;
+  filter:drop-shadow(0 0 18px var(--glow));
+}
+@keyframes rotate{to{transform:rotate(360deg)}}
+
+h1{
+  font-family:"Ma Shan Zheng",serif;
+  font-size:clamp(40px,9vw,68px);
+  letter-spacing:.12em;
+  background:linear-gradient(180deg,var(--gold-bright),var(--gold) 55%,var(--gold-deep));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 30px var(--glow);
+  line-height:1.1;
+}
+.subtitle{color:var(--muted);letter-spacing:.32em;margin-top:10px;font-size:14px}
+
+/* ---------- 面板 ---------- */
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:30px 26px;
+  backdrop-filter:blur(14px);
+  box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05);
+  margin-bottom:22px;
+  animation:rise .55s ease both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hidden{display:none}
+
+.field-label{display:block;color:var(--gold);letter-spacing:.06em;margin-bottom:14px;font-size:15px;text-align:center}
+textarea{
+  width:100%;background:rgba(8,5,20,.7);border:1px solid var(--line);border-radius:12px;
+  color:var(--ink);font-family:inherit;font-size:16px;padding:14px 16px;resize:vertical;line-height:1.7;
+  transition:border-color .3s,box-shadow .3s;
+}
+textarea::placeholder{color:#6c659a}
+textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,200,122,.14)}
+.hint{color:var(--muted);font-size:13px;text-align:center;margin-top:12px;line-height:1.7}
+
+/* ---------- 按钮 ---------- */
+.btn-primary{
+  display:block;width:100%;margin:20px auto 0;cursor:pointer;
+  border:1px solid var(--gold);border-radius:14px;
+  background:linear-gradient(180deg,rgba(232,200,122,.22),rgba(232,200,122,.06));
+  color:var(--gold-bright);font-family:inherit;font-size:18px;font-weight:600;letter-spacing:.16em;
+  padding:15px 18px;
+  transition:transform .2s,box-shadow .3s,background .3s;
+  box-shadow:0 0 0 rgba(232,200,122,0);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow);background:linear-gradient(180deg,rgba(232,200,122,.34),rgba(232,200,122,.1))}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+.btn-ghost{
+  display:block;margin:16px auto 0;cursor:pointer;background:transparent;
+  border:1px solid var(--line);border-radius:12px;color:var(--muted);
+  font-family:inherit;font-size:14px;letter-spacing:.12em;padding:10px 22px;transition:.25s;
+}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold)}
+.btn-ghost.small{font-size:12px;padding:7px 14px;margin-top:22px}
+
+/* ---------- 摇卦 ---------- */
+.cast-status{text-align:center;color:var(--gold);letter-spacing:.18em;font-size:18px;min-height:26px;margin-bottom:18px}
+
+.coins{display:flex;justify-content:center;gap:26px;margin:8px 0 6px;perspective:1100px}
+.coin{width:96px;height:96px}
+.coin-3d{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0s}
+.coin.spinning .coin-3d{animation:wobble .6s ease-in-out infinite}
+@keyframes wobble{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+.face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;display:flex;align-items:center;justify-content:center}
+.face.back{transform:rotateY(180deg)}
+
+.coin-art{
+  position:relative;width:100%;height:100%;border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%,#fff3cf,#e8c87a 38%,#c79b46 72%,#8a6a2c 100%);
+  box-shadow:inset 0 0 0 4px rgba(138,106,44,.6),inset 0 0 14px rgba(90,60,15,.6),0 6px 18px rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:center;
+}
+.back-art{background:radial-gradient(circle at 35% 30%,#ffedc0,#d9b664 38%,#b58d3e 72%,#7d5e28 100%)}
+.coin-art .hole{
+  position:absolute;top:50%;left:50%;width:30px;height:30px;transform:translate(-50%,-50%);
+  background:var(--bg);border:2px solid rgba(90,60,15,.7);box-shadow:inset 0 0 6px rgba(0,0,0,.8);
+}
+.coin-art .ch{
+  position:absolute;color:#5a3d12;font-family:"Ma Shan Zheng",serif;font-size:20px;font-style:normal;line-height:1;
+  text-shadow:0 1px 0 rgba(255,255,255,.35);
+}
+.ch.t{top:9px;left:50%;transform:translateX(-50%)}
+.ch.b{bottom:9px;left:50%;transform:translateX(-50%)}
+.ch.l{left:10px;top:50%;transform:translateY(-50%)}
+.ch.r{right:10px;top:50%;transform:translateY(-50%)}
+.back-art::after{content:"";position:absolute;inset:14px;border-radius:50%;border:1px dashed rgba(90,60,15,.45)}
+
+.coin.landed .coin-3d{animation:landpulse .5s ease}
+@keyframes landpulse{0%{filter:drop-shadow(0 0 0 var(--glow))}40%{filter:drop-shadow(0 0 16px var(--glow))}100%{filter:drop-shadow(0 0 0 var(--glow))}}
+
+/* ---------- 逐爻生成 ---------- */
+.hexagram-build{display:flex;flex-direction:column;gap:11px;margin:26px auto 4px;width:min(330px,80%)}
+.yao-row{height:24px;display:flex;align-items:center;justify-content:center;gap:9px}
+.yao-row.placeholder{opacity:.12}
+.yao-row.placeholder::before{content:"";width:78%;height:14px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--muted) 0 30%,transparent 30% 35%)}
+
+.bar{height:15px;border-radius:3px;background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));box-shadow:0 0 12px var(--glow)}
+.yang .bar{width:200px}
+.yin{display:flex;gap:18px}
+.yin .bar{width:91px}
+.yao-line{display:flex;align-items:center;gap:9px;animation:yaoIn .5s ease both}
+@keyframes yaoIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+.move-mark{color:#ff7ba6;font-size:15px;width:18px;text-align:center;text-shadow:0 0 8px rgba(255,123,166,.8)}
+.yao-num{color:var(--muted);font-size:12px;width:34px;text-align:right}
+
+/* ---------- 结果 ---------- */
+.result-head{text-align:center;margin-bottom:22px}
+#hexTitle{font-family:"Ma Shan Zheng",serif;font-size:34px;color:var(--gold-bright);letter-spacing:.1em;text-shadow:0 0 20px var(--glow)}
+.hex-sub{color:var(--muted);margin-top:8px;letter-spacing:.14em;font-size:13px}
+
+.result-grid{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.hex-card{
+  background:rgba(8,5,20,.5);border:1px solid var(--line);border-radius:16px;
+  padding:18px 16px;text-align:center;min-width:150px;flex:1;
+}
+.hex-card-label{color:var(--muted);font-size:13px;letter-spacing:.2em;margin-bottom:12px}
+.hex-glyph{display:flex;flex-direction:column;gap:6px;align-items:center;margin-bottom:14px}
+.hex-glyph .g-yang{width:96px;height:11px;border-radius:2px;background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));box-shadow:0 0 8px var(--glow)}
+.hex-glyph .g-yin{width:96px;height:11px;display:flex;gap:14px}
+.hex-glyph .g-yin span{flex:1;border-radius:2px;background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));box-shadow:0 0 8px var(--glow)}
+.hex-glyph .moving{position:relative}
+.hex-glyph .moving::after{content:"";position:absolute;right:-16px;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:#ff7ba6;box-shadow:0 0 8px #ff7ba6}
+.hex-name{font-family:"Ma Shan Zheng",serif;font-size:26px;color:var(--gold-bright);letter-spacing:.08em}
+.hex-trigram{color:var(--muted);font-size:13px;margin-top:6px;letter-spacing:.12em}
+
+.change-arrow{min-width:auto;flex:0 0 auto;border:none;background:transparent}
+.change-arrow .arrow{font-size:30px;color:var(--violet);text-shadow:0 0 12px var(--violet)}
+.change-arrow .arrow-label{color:var(--muted);font-size:12px;letter-spacing:.16em;margin-top:4px}
+
+.detail{
+  margin:22px 0 6px;border-top:1px solid var(--line);padding-top:18px;
+  color:var(--muted);font-size:14px;line-height:1.9;
+}
+.detail b{color:var(--gold)}
+.detail .moving-list{color:#ff9bbd}
+
+.copy-zone{margin-top:8px}
+#copyBtn.copied{background:linear-gradient(180deg,rgba(123,92,255,.4),rgba(123,92,255,.12));border-color:var(--violet);color:#d9d0ff}
+
+.foot{position:relative;z-index:2;text-align:center;color:#5b5588;font-size:12px;letter-spacing:.12em;padding:18px 0 28px}
+
+@media (max-width:520px){
+  .coins{gap:14px}
+  .coin{width:74px;height:74px}
+  .coin-art .ch{font-size:15px}
+  .coin-art .hole{width:22px;height:22px}
+  .yang .bar{width:150px}.yin .bar{width:66px}
+  .hexagram-build{width:92%}
+  .change-arrow .arrow{transform:rotate(90deg)}
+}
